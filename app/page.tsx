@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
-// 1. THIS IS THE DATA OBJECT YOU WERE MISSING
 const AGENT_DATA = {
   1: {
     title: "Initiation",
@@ -56,7 +55,7 @@ const AGENT_DATA = {
 
 export default function PMPortfolio() {
   const { messages, input, handleInputChange, handleSubmit, setInput } = useChat();
-  const [selectedAgent, setSelectedAgent] = useState(1); // Track which agent is clicked
+  const [selectedAgent, setSelectedAgent] = useState(1);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -106,11 +105,13 @@ export default function PMPortfolio() {
         </motion.div>
       </section>
 
-      {/* --- RE-BUILT SECTION 3: PM AGENT CHAIN DASHBOARD --- */}
+      {/* --- SECTION 3: PM AGENT CHAIN DASHBOARD --- */}
       <section id="pm-agent-chain" className="py-32 border-y border-white/5 bg-[#040914]">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <p className="text-blue-500 font-mono text-[10px] tracking-[0.4em] uppercase mb-4 font-bold">Hero Project</p>
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tighter text-white mb-16 italic">PM Agent Chain</h2>
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <p className="text-blue-500 font-mono text-[10px] tracking-[0.4em] uppercase mb-4 font-bold text-center">Hero Project</p>
+            <h2 className="text-5xl md:text-6xl font-bold tracking-tighter text-white mb-16 italic text-center">PM Agent Chain</h2>
+          </div>
           
           {/* 6-Agent Architecture Flow */}
           <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-3 mb-16 relative">
@@ -149,13 +150,13 @@ export default function PMPortfolio() {
             </div>
           </motion.div>
 
-          {/* Chatbot Interface (Integrated below the chain) */}
-          <div className="max-w-3xl mx-auto border border-white/10 rounded-[2rem] bg-black h-[500px] flex flex-col overflow-hidden shadow-2xl">
+          {/* Chatbot Interface */}
+          <div className="max-w-3xl mx-auto border border-white/10 rounded-[2rem] bg-black h-[500px] flex flex-col overflow-hidden shadow-2xl mb-32">
             <div className="flex-1 overflow-y-auto p-8 custom-scrollbar" ref={scrollRef}>
               <AnimatePresence>
                 {messages.length === 0 && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8 py-6">
-                    <p className="text-zinc-500 text-sm italic">Ask my agent about the tech stack, metrics, or career roadmap.</p>
+                    <p className="text-zinc-500 text-sm italic text-center">Ask my agent about the tech stack, metrics, or career roadmap.</p>
                     <div className="flex flex-wrap justify-center gap-2">
                       {suggestions.map((item) => (
                         <button key={item.label} onClick={() => setInput(item.prompt)} className="px-4 py-2 rounded-full border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] text-[11px] text-zinc-400">
@@ -180,6 +181,75 @@ export default function PMPortfolio() {
               <button type="submit" disabled={!input} className="absolute right-7 top-1/2 -translate-y-1/2 p-2 bg-white text-black rounded-lg disabled:opacity-20 transition-all"><Send size={16} /></button>
             </form>
           </div>
+
+          {/* --- NEW: JSON PREVIEW WINDOWS --- */}
+          <div className="mt-32 space-y-32 max-w-5xl mx-auto">
+            {/* Window 1: Schema */}
+            <div className="animate-in fade-in duration-1000">
+              <div className="flex items-center justify-between mb-8">
+                <h4 className="text-2xl font-bold text-white tracking-tight italic">JSON Schema Preview</h4>
+                <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">v1.3.0 • Full Traceability</div>
+              </div>
+              <div className="bg-[#0b121f] rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+                <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border-b border-white/5">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
+                  </div>
+                  <span className="text-[10px] font-mono text-zinc-500 ml-4 italic">handoff-schema-v1.3.0.json</span>
+                </div>
+                <pre className="p-8 text-[13px] font-mono leading-relaxed overflow-x-auto text-blue-300">
+{`{
+  "source_agent": "planning-agent",
+  "target_agent": "execution-agent",
+  "payload_version": "1.3.0",
+  "status": "complete",
+  "verification_evidence": {
+    "metrics": {
+      "documents_produced": 6,
+      "requirements_covered": 100
+    }
+  },
+  "overall_goal_achieved": true
+}`}
+                </pre>
+              </div>
+            </div>
+
+            {/* Window 2: Co-Pilot */}
+            <div className="animate-in fade-in duration-1000 delay-300">
+              <div className="flex items-center justify-between mb-8">
+                <h4 className="text-2xl font-bold text-white tracking-tight italic">v2.0 Co-Pilot Output</h4>
+              </div>
+              <div className="bg-[#0b121f] rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+                <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border-b border-white/5">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
+                  </div>
+                  <span className="text-[10px] font-mono text-zinc-500 ml-4 italic">copilot-output-v2.0.json</span>
+                </div>
+                <pre className="p-8 text-[13px] font-mono leading-relaxed overflow-x-auto text-emerald-300">
+{`{
+  "section_b_copilot_analysis": {
+    "risks_identified": 6,
+    "blind_spots": 6,
+    "moscow_classification": {
+      "must": 7, "should": 3, "could": 2, "wont": 3
+    },
+    "critical_flags": ["R-01: No properties owned (score 16)"]
+  },
+  "section_c_knowledge_log": {
+    "pattern_tags": ["scope-fiction", "assumption-gap"],
+    "prevention_playbook": true
+  }
+}`}
+                </pre>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -187,15 +257,15 @@ export default function PMPortfolio() {
       <section id="case-study" className="py-32 px-6 max-w-6xl mx-auto border-t border-white/5">
         <h2 className="text-zinc-600 uppercase tracking-widest text-[10px] font-bold mb-16 italic">04. Case Study</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-           <div className="aspect-[4/5] bg-zinc-900 rounded-[2.5rem] border border-white/5 p-12 flex flex-col justify-end hover:border-white/20 transition-all group relative overflow-hidden italic">
-              <span className="text-blue-500 font-mono text-[10px] tracking-widest uppercase mb-4">Fintech</span>
+           <div className="aspect-[4/5] bg-zinc-900 rounded-[2.5rem] border border-white/5 p-12 flex flex-col justify-end hover:border-white/20 transition-all group relative overflow-hidden italic cursor-pointer">
+              <span className="text-blue-500 font-mono text-[10px] tracking-widest uppercase mb-4 font-bold italic">Fintech</span>
               <h4 className="text-4xl font-bold mb-4 leading-tight text-white italic">Optimizing Personal <br/>Finance Flows.</h4>
-              <p className="text-zinc-500 text-sm">Reduced churn by 14% through iterative UX research.</p>
+              <p className="text-zinc-500 text-sm italic">Reduced churn by 14% through iterative UX research.</p>
            </div>
-           <div className="aspect-[4/5] bg-zinc-950 rounded-[2.5rem] border border-white/5 p-12 flex flex-col justify-end hover:border-white/20 transition-all group italic">
-              <span className="text-zinc-600 font-mono text-[10px] tracking-widest uppercase mb-4">Internal Tools</span>
+           <div className="aspect-[4/5] bg-zinc-950 rounded-[2.5rem] border border-white/5 p-12 flex flex-col justify-end hover:border-white/20 transition-all group italic cursor-pointer">
+              <span className="text-zinc-600 font-mono text-[10px] tracking-widest uppercase mb-4 font-bold italic">Internal Tools</span>
               <h4 className="text-4xl font-bold mb-4 leading-tight text-white italic">AI-Driven Roadmap <br/>Prioritization.</h4>
-              <p className="text-zinc-500 text-sm">Automated stakeholder feedback loops using LLMs.</p>
+              <p className="text-zinc-500 text-sm italic">Automated stakeholder feedback loops using LLMs.</p>
            </div>
         </div>
       </section>
