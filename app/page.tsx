@@ -1,7 +1,7 @@
 'use client';
 
 import { useChat } from 'ai/react';
-import { Send, User, Bot, Sparkles, Linkedin, Github } from 'lucide-react';
+import { Send, User, Bot, Sparkles, Mail, ExternalLink } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
 export default function PMPortfolio() {
@@ -20,8 +20,8 @@ export default function PMPortfolio() {
           <p className="text-xs text-zinc-500 uppercase tracking-widest font-medium">PM Agent</p>
         </div>
         <div className="flex gap-4">
-           <Linkedin size={20} className="text-zinc-400 hover:text-blue-600 cursor-pointer" />
-           <Github size={20} className="text-zinc-400 hover:text-black cursor-pointer" />
+           <Mail size={20} className="text-zinc-400 hover:text-blue-600 cursor-pointer" />
+            <ExternalLink size={20} className="text-zinc-400 hover:text-black cursor-pointer" />
         </div>
       </header>
 
